@@ -7,11 +7,14 @@ console.log('First server');
 const express = require('express');
 require('dotenv').config();
 let data = require('./data/folder.json');
+const cors = require('cors');
 
 
 // once express is in we need to us it - per express docs
 // app === server
 const app = express();
+
+app.use(cors());
 
 // define port
 const PORT = process.env.PORT || 3002;
@@ -60,7 +63,7 @@ app.get('*', (request, response) => {
 
 app.use((error, request, response, next) => {
   response.status(500).send(error.message);
-})
+});
 
 // ***** SERVER START *****
 
