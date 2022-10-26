@@ -8,6 +8,7 @@ const express = require('express');
 require('dotenv').config();
 let data = require('./data/folder.json');
 const cors = require('cors');
+// cors is middleware to share resources across the internet
 
 
 // once express is in we need to us it - per express docs
