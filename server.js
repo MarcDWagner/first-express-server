@@ -42,7 +42,7 @@ app.get('/', (request, response) => {
 app.get('/weather', (request, response, next) => {
   let cityName = request.query.searchQuery;
   let lat = request.query.lat;
-  let long = request.query.lon;
+  let lon = request.query.lon;
   try {
     let cityData = data.find(city => city.city_name === cityName);
     let groomedData = cityData.data.map(day => new Forecast(day));
