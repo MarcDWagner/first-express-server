@@ -6,8 +6,9 @@ console.log('First server');
 
 const express = require('express');
 require('dotenv').config();
-let data = require('./data/weather.json');
+// let data = require('./data/weather.json');
 const cors = require('cors');
+const { default: axios } = require('axios');
 // const axios = require('axios');
 // const weatherFunction = require('./modules/weather');
 // const movieFunction = require('./modules/movies');
@@ -34,17 +35,17 @@ app.get('/', (request, response) => {
 
 
 // todo:  build /weather route and send groomed json data - arr of 3 days of weather {date, description} - to front end
-// front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&long=anothervaule
+// front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&lon=anothervaule
 
-app.get('/weather', (request, response, next) => {
+app.get('/weather', async(request, response, next) => {
   console.log(request);
-  let cityName = request.query.searchQuery;
-  // let lat = request.query.lat;
-  // let lon = request.query.lon;
-  // let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=[i]&days=[10]&lat=${lat}&lon{lon};
+  // let cityName = request.query.searchQuery;
+  let lat = request.query.lat;
+  let lon = request.query.lon;
+  let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=[i]&days=[10]&lat=${lat}&lon${lon}`;
   try {
-    let cityData = data.find(city => city.city_name === cityName);
-    let groomedData = cityData.data.map(day => new Forecast(day));
+    let cityWeatherData = await axios.get(url);
+    let groomedData = cityWeatherData.data.data.map(day => new Forecast(day));
     response.status(200).send(groomedData);
 
   } catch (error) {
@@ -55,7 +56,8 @@ app.get('/weather', (request, response, next) => {
 class Forecast {
   constructor(dayObj) {
     this.date = dayObj.datetime;
-    this.description = dayObj.weather.description;
+    this.weather = dayObj.weather.description;
+    this.key = dayObj._id;
   }
 }
 
