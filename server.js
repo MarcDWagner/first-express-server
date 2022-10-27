@@ -15,7 +15,7 @@ const axios = require('axios');
 // once express is in we need to us it - per express docs
 // app === server
 const app = express();
-
+// middleware:
 app.use(cors());
 
 // define port
@@ -30,12 +30,7 @@ app.get('/', (request, response) => {
   response.status(200).send('Welome to my server');
 });
 
-// app.get('/hello', (request, response) => {
-//   console.log(request.query);
-//   let firstName = request.query.firstName;
-//   let lastName = request.query.lastName;
-//   response.status(200).send(`Hello ${firstName} ${lastName}, welcome to my server.`);
-// });
+
 // todo:  build /weather route and send groomed json data - arr of 3 days of weather {date, description} - to front end
 // front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&long=anothervaule
 
