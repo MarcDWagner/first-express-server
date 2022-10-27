@@ -8,7 +8,9 @@ const express = require('express');
 require('dotenv').config();
 let data = require('./data/weather.json');
 const cors = require('cors');
-const axios = require('axios');
+// const axios = require('axios');
+// const weatherFunction = require('./modules/weather');
+// const movieFunction = require('./modules/movies');
 // cors is middleware to share resources across the internet
 
 
@@ -35,9 +37,11 @@ app.get('/', (request, response) => {
 // front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&long=anothervaule
 
 app.get('/weather', (request, response, next) => {
+  console.log(request);
   let cityName = request.query.searchQuery;
-  let lat = request.query.lat;
-  let lon = request.query.lon;
+  // let lat = request.query.lat;
+  // let lon = request.query.lon;
+  // let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=[i]&days=[10]&lat=${lat}&lon{lon};
   try {
     let cityData = data.find(city => city.city_name === cityName);
     let groomedData = cityData.data.map(day => new Forecast(day));
@@ -47,7 +51,6 @@ app.get('/weather', (request, response, next) => {
     next(error);
   }
 });
-
 
 class Forecast {
   constructor(dayObj) {
