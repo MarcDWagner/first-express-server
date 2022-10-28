@@ -43,7 +43,7 @@ app.get('/weather', async (request, response, next) => {
     // let cityName = request.query.searchQuery;
     let lat = request.query.lat;
     let lon = request.query.lon;
-    let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&lat=${lat}&lon=${lon}`;
+    let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&units=[I]&lat=${lat}&lon=${lon}`;
     let cityWeatherData = await axios.get(url);
     let groomedData = cityWeatherData.data.data.map(day => new Forecast(day));
     response.status(200).send(groomedData);
@@ -57,7 +57,9 @@ class Forecast {
   constructor(dayObj) {
     this.date = dayObj.datetime;
     this.weather = dayObj.weather.description;
-    this.key = dayObj.index;
+    this.high = dayObj.max_temp;
+    this.low = dayObj.min_temp;
+    // this.key = dayObj.index;
   }
 }
 
