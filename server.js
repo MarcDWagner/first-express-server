@@ -8,8 +8,8 @@ const express = require('express');
 require('dotenv').config();
 // let data = require('./data/weather.json');
 const cors = require('cors');
-const { default: axios } = require('axios');
-// const axios = require('axios');
+// const { default: axios } = require('axios');
+const axios = require('axios');
 // const weatherFunction = require('./modules/weather');
 // const movieFunction = require('./modules/movies');
 // cors is middleware to share resources across the internet
@@ -37,9 +37,9 @@ app.get('/', (request, response) => {
 // todo:  build /weather route and send groomed json data - arr of 3 days of weather {date, description} - to front end
 // front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&lon=anothervaule
 
-app.get('/weather', async(request, response) => {
+app.get('/weather', async (request, response, next) => {
   try {
-    console.log(request);
+    console.log('weather route works');
     // let cityName = request.query.searchQuery;
     let lat = request.query.lat;
     let lon = request.query.lon;
@@ -49,7 +49,7 @@ app.get('/weather', async(request, response) => {
     response.status(200).send(groomedData);
 
   } catch (error) {
-    console.error(error.message);
+    next(error);
   }
 });
 
@@ -57,7 +57,7 @@ class Forecast {
   constructor(dayObj) {
     this.date = dayObj.datetime;
     this.weather = dayObj.weather.description;
-    // this.key = dayObj._id;
+    this.key = dayObj.index;
   }
 }
 
