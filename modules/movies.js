@@ -1,5 +1,11 @@
-'use strict';
+// 'use strict';
 
-// const axios = require('axios');
+// // const axios = require('axios');
 
-// module.exports = function or {function, function};
+// async function getMovies(request, response, next){
+//   try {
+
+//   }
+// }
+
+// // module.exports = function or {function, function};

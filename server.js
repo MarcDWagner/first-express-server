@@ -33,13 +33,9 @@ app.get('/', (request, response) => {
   response.status(200).send('Welcome to my server');
 });
 
-
-// todo:  build /weather route and send groomed json data - arr of 3 days of weather {date, description} - to front end
-// front-end axio.get to: http://localhost:3001/weather?searchQuery=value&lat=anothervalue&lon=anothervaule
-
 app.get('/weather', async (request, response, next) => {
   try {
-    console.log('weather route works');
+    // console.log('weather route works');
     // let cityName = request.query.searchQuery;
     let lat = request.query.lat;
     let lon = request.query.lon;
@@ -60,6 +56,28 @@ class Forecast {
     this.high = dayObj.max_temp;
     this.low = dayObj.min_temp;
     // this.key = dayObj.index;
+  }
+}
+
+app.get('/movies', async (request, response, next) => {
+  try {
+    let cityName = request.query.searchQuery;
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${cityName}&language=en-US&page=1&include_adult=false`;
+    let movieData = await axios.get(url);
+    let groomedMovieData = movieData.data.results.map(mov => new Movies(mov));
+    console.log(groomedMovieData);
+    response.status(200).send(groomedMovieData);
+  } catch (error) {
+    next(error);
+  }
+});
+
+class Movies {
+  constructor(movieObj) {
+    this.title = movieObj.title;
+    this.overview = movieObj.overview;
+    this.poster = movieObj.poster_path;
+    this.release = movieObj.release_date;
   }
 }
 
