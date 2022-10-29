@@ -61,7 +61,7 @@ class Forecast {
 
 app.get('/movies', async (request, response, next) => {
   try {
-    let cityName = request.query.searchQuery;
+    let cityName = request.query.city;
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${cityName}&language=en-US&page=1&include_adult=false`;
     let movieData = await axios.get(url);
     let groomedMovieData = movieData.data.results.map(mov => new Movies(mov));
