@@ -31,3 +31,19 @@
 - Finish time:  0830
 - Actual time needed to complete:  
 - Incomplete: weather
+
+10/28/22 Lab 8
+
+- Number and Name of Feature:  # Weather
+- Estimate of time needed to complete: 4  
+- Start time:  1330
+- Finish time:  1730
+- Actual time needed to complete:  6 total
+
+10/29/22 Lab 08
+
+- Number and Name of Feature:  #, Movies
+- Estimate of time needed to complete:  3
+- Start time:  1200
+- Finish time:  1800
+- Actual time needed to complete:  6
